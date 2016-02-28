@@ -19,7 +19,7 @@ from periphery import GPIO
 
 app = Flask(__name__)
 wallet = Wallet()
-payment = Payment(app, wallet)
+#payment = Payment(app, wallet)
 
 PRICE_PER_BEAN = 20000
 SECONDS_PER_BEAN = 2
