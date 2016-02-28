@@ -19,7 +19,7 @@ app = Flask(__name__)
 wallet = Wallet()
 payment = Payment(app, wallet)
 
-PRICE_PER_BEAN = 100
+PRICE_PER_BEAN = 10000
 SECONDS_PER_BEAN = 2
 
 total_sold = 0
@@ -36,6 +36,7 @@ def purchase():
     qty = int(request.args.get('qty'))
     total_sold += qty
     
+    # drive GPIO#6 (pin 1)
     subprocess.call("sudo python3 gpio_controller.py %d %d" % (6, SECONDS_PER_BEAN*qty), shell=True)
 
     return "Paid %d. Please collect your jellybeans." % qty
