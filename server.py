@@ -13,9 +13,7 @@ from two1.lib.bitserv.flask import Payment
 from flask import Flask
 from flask import request
 
-# import pin controller
-from periphery import GPIO
-
+import subprocess 
 
 app = Flask(__name__)
 wallet = Wallet()
@@ -27,30 +25,18 @@ SECONDS_PER_BEAN = 2
 total_sold = 0
     
 def get_price_from_request(request):
-    qty = request.args.get('qty')
-    return PRICE_PER_BEAN*int(qty)
+    qty = int(request.args.get('qty'))
+    return PRICE_PER_BEAN*qty
 
 # buy jellybeans. price depends on qty requested
 @app.route('/buy')
 @payment.required(get_price_from_request)
 def purchase():
 
-    qty = request.args.get('qty')
-    total_sold += int(qty)
+    qty = int(request.args.get('qty'))
+    total_sold += qty
     
-    # Open GPIO 6 with output direction
-    gpio_out = GPIO(6, "out")
-
-    # dispense some beans
-    gpio_out.write(True)
-
-    # This needs to be calibrated depending 
-    # on dispenser speed. 
-    time.sleep(2*qty)
-
-    # Stop spitting out beans
-    gpio_out.write(False)
-    gpio_out.close()
+    subprocess.call("sudo python3 gpio_controller.py %d %d" % (6, SECONDS_PER_BEAN*qty))
 
     return "Paid %d. Please collect your jellybeans." % qty
 
