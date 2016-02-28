@@ -21,7 +21,7 @@ def cmd_buy(qty):
     print(r.text)
 
 if __name__ == '__main__':
-    if len(sys.argv) == 0:
+    if len(sys.argv) < 2:
         print('Please enter a valid quantity')
     else:
-        cmd_buy(int(sys.argv[0]))
+        cmd_buy(int(sys.argv[1]))
