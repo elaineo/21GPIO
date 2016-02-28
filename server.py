@@ -34,7 +34,6 @@ def get_price_from_request(request):
 @app.route('/buy')
 @payment.required(get_price_from_request)
 def purchase():
-    print(get_price_from_request)
 
     qty = request.args.get('qty')
     total_sold += int(qty)
@@ -53,7 +52,7 @@ def purchase():
     gpio_out.write(False)
     gpio_out.close()
 
-    return "Paid %d. Please collect your jellybeans." % get_price_from_request
+    return "Paid %d. Please collect your jellybeans." % qty
 
 # get total number sold
 @app.route('/total')
