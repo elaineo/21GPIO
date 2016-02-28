@@ -21,19 +21,20 @@ app = Flask(__name__)
 wallet = Wallet()
 payment = Payment(app, wallet)
 
-PRICE_PER_BEAN = 20000
+PRICE_PER_BEAN = 100
 SECONDS_PER_BEAN = 2
 
 total_sold = 0
     
 def get_price_from_request(request):
     qty = request.args.get('qty')
-    return PRICE_PER_BEAN*qty
+    return PRICE_PER_BEAN*int(qty)
 
 # buy jellybeans. price depends on qty requested
 @app.route('/buy')
 @payment.required(get_price_from_request)
 def purchase():
+    print(get_price_from_request)
 
     qty = request.args.get('qty')
     total_sold += int(qty)
