@@ -36,7 +36,7 @@ def purchase():
     qty = int(request.args.get('qty'))
     total_sold += qty
     
-    subprocess.call("sudo python3 gpio_controller.py %d %d" % (6, SECONDS_PER_BEAN*qty))
+    subprocess.call("sudo python3 gpio_controller.py %d %d" % (6, SECONDS_PER_BEAN*qty), shell=True)
 
     return "Paid %d. Please collect your jellybeans." % qty
 
