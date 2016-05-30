@@ -6,7 +6,7 @@ from periphery import GPIO
 import time
 
 
-def pull_up(pin, time):
+def pull_up(pin, seconds):
     # Open GPIO 6 with output direction
     gpio_out = GPIO(pin, "out")
 
@@ -15,7 +15,7 @@ def pull_up(pin, time):
 
     # This needs to be calibrated depending 
     # on dispenser speed. 
-    time.sleep(time)
+    time.sleep(seconds)
 
     # Stop spitting out beans
     gpio_out.write(False)
@@ -26,4 +26,4 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print('Please enter a valid pin and duration')
     else:
-        pull_up(int(sys.argv[1]), int(sys.arg[2]))
+        pull_up(int(sys.argv[1]), int(sys.argv[2]))
